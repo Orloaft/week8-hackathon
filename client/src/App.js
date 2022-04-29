@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
+import ourLogo from "./assets/images/logo.png";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -41,13 +43,13 @@ class App extends Component {
       console.log(this.state.selectedFile);
       return (
         <div>
-          <h2>File Details:</h2>
+          <h2  className="white-text">File Details:</h2>
 
-          <p>File Name: {this.state.selectedFile.name}</p>
+          <p  className="white-text">File Name: {this.state.selectedFile.name}</p>
 
-          <p>File Type: {this.state.selectedFile.type}</p>
+          <p  className="white-text">File Type: {this.state.selectedFile.type}</p>
 
-          <p>
+          <p  className="white-text">
             Last Modified:{" "}
             {this.state.selectedFile.lastModifiedDate &&
               this.state.selectedFile.lastModifiedDate.toDateString()}
@@ -58,7 +60,7 @@ class App extends Component {
       return (
         <div>
           <br />
-          <h4>Choose before Pressing the Upload button</h4>
+          <h4 className="white-text">Choose before Pressing the Upload button</h4>
         </div>
       );
     }
@@ -66,16 +68,42 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Web eyes - upload test</h3>
-        <div>
-          <input type="file" onChange={this.onFileChange} />
-          <button onClick={this.onFileUpload}>Upload!</button>
+      <div className="background">
+
+        <header className="nav">
+          <img className="nav__logo" src={ourLogo} alt="our logo"/>
+          <h1 className="nav__title white-text">Web Eyes</h1> 
+        </header>
+
+        <div className="sections">
+              <div className="sections__cards">
+                <h3 className="white-text">Choose a file to upload</h3>
+                <div>
+                  <input className="form__input white-text" type="file" onChange={this.onFileChange} /><br></br><br></br><br></br>
+                  <button className="form__button"onClick={this.onFileUpload}>Upload!</button>
+                </div>
+                {this.fileData()}
+
+              </div>
+
+              <div className="sections__cards white-text">
+                  Uploaded image will go here
+
+              </div>
+
+              <div className="sections__cards white-text">
+                  Image tags section will be going here
+                
+              </div>
         </div>
-        {this.fileData()}
+
+
+
+
       </div>
     );
   }
 }
 
 export default App;
+
