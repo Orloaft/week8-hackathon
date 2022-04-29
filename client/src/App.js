@@ -88,7 +88,13 @@ class App extends Component {
     // console.log(myObject);
     
     return newObject.map((item) => {
-      return <li className="returned__list">{`${item[0]}, ${Math.floor(item[1])}%`}</li>
+      return <> 
+      <div className="progress-bar">
+        <li className="returned__list">{`${item[0]}, ${Math.floor(item[1])}%`}</li>
+
+        <div className="progress-bar__percentage" style={{width: `${Math.floor(item[1])}%`}}></div>
+      </div></>
+
     });
   }
 
@@ -118,7 +124,7 @@ class App extends Component {
               </div>
 
               <div className="sections__cards white-text">
-                  <ol>{this.convertData(testData)}</ol>
+                  <ol className="returned__orderedlist">{this.convertData(testData)}</ol>
                   {/* {this.convertData(this.state.returnedObject)} */}
               </div>
         </div>
