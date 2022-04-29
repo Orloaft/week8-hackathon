@@ -73,23 +73,23 @@ class App extends Component {
 
   convertData = (input) => {
 
-    let output = "";
-    let myObject = {};
+    let myObject = [];
 
     input.result.tags.forEach((tag) => {
-      myObject[tag.tag.en] = tag.confidence;
+      myObject.push([tag.tag.en, tag.confidence]);
     })
-    
-    let count=0;
-    for (let item in myObject) {
-      output += `${item}, ${Math.floor(myObject[item])}%`
-      count+=1;
-      if(count===10) {
-        break;
-      }
+
+    let newObject = [];
+
+    for (let i=0; i<10; i++) {
+      newObject.push(myObject[i]);
     }
 
-    return output;
+    // console.log(myObject);
+    
+    return newObject.map((item) => {
+      return <li className="returned__list">{`${item[0]}, ${Math.floor(item[1])}%`}</li>
+    });
   }
 
   render() {
@@ -118,7 +118,7 @@ class App extends Component {
               </div>
 
               <div className="sections__cards white-text">
-                  {this.convertData(testData)}
+                  <ol>{this.convertData(testData)}</ol>
                   {/* {this.convertData(this.state.returnedObject)} */}
               </div>
         </div>
