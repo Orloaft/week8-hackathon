@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { Component } from "react";
 import ourLogo from "./assets/images/logo.png";
 import "./App.css";
+import testData from "./data/test.json";
 
 class App extends Component {
   state = {
     // Initially, no file is selected
     selectedFile: null,
+    returnedObject: testData
   };
 
   // On file select (from the pop up)
@@ -33,7 +35,10 @@ class App extends Component {
     // Request made to the backend api
     // Send formData object
     console.log(formData.values());
-    axios.post("http://localhost:8080/files", formData);
+    axios.post("http://localhost:8080/files", formData)
+          .then((response) => {
+              this.setState({returnedObject: response.data});
+          });
   };
 
   // File content to be displayed after
@@ -66,6 +71,27 @@ class App extends Component {
     }
   };
 
+  convertData = (input) => {
+
+    let output = "";
+    let myObject = {};
+
+    input.result.tags.forEach((tag) => {
+      myObject[tag.tag.en] = tag.confidence;
+    })
+    
+    let count=0;
+    for (let item in myObject) {
+      output += `${item}, ${Math.floor(myObject[item])}%`
+      count+=1;
+      if(count===10) {
+        break;
+      }
+    }
+
+    return output;
+  }
+
   render() {
     return (
       <div className="background">
@@ -92,8 +118,8 @@ class App extends Component {
               </div>
 
               <div className="sections__cards white-text">
-                  Image tags section will be going here
-                
+                  {this.convertData(testData)}
+                  {/* {this.convertData(this.state.returnedObject)} */}
               </div>
         </div>
 
